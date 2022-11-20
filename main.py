@@ -40,17 +40,20 @@ def getMessage():
             else:
                 key = key.upper()
                 print("La clave es: " + key)
-            return convertMessage(message, keySize)
+
+                # matriz d*d es la matriz de la clave
+                print(convertToMatrix(key, keySize))
+            return convertToMatrix(message.upper(), keySize)
 
 
-def convertMessage(msg, k):
-    for index in range (len(msg)):
+def convertToMatrix(msg, k):
+    for index in range(len(msg)):
         if index % k == 0:
-            sub = msg[index:index +k]
+            sub = msg[index:index + k]
             matrix = []
             for j in sub:
                 matrix.append(j)
-            print("["+'  '.join(matrix)+"]")
+            print("[" + '  '.join(matrix) + "]")
 
 
 def main():
