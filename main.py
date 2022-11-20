@@ -24,8 +24,7 @@ def getMessage():
         print("Mensaje inválido intente nuevamente")
         return getMessage()
     else:
-
-        return print("El mensaje a cifrar es: "+message.upper())
+        return print("El mensaje a cifrar es: " + message.upper()), print(list(message.upper()))
 
 
 def main():
