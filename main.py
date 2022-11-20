@@ -1,5 +1,7 @@
 import re
 
+from numpy import *
+
 
 def createCharacters():
     # Generating the alphabet and digits
@@ -25,23 +27,31 @@ def getMessage():
         return getMessage()
     else:
         print("El mensaje a cifrar es: " + message.upper()),
-        key = int(input("Ingrese el tamaño de la clave, puede estar entre 2,3 y 4 caracteres: "))
-        while (key < 2 or key > 4):
+        keySize = int(input("Ingrese el tamaño de la clave, puede estar entre 2,3 y 4 caracteres: "))
+        while (keySize < 2 or keySize > 4):
             print("La clave debe tener entre 2 y 4 caracteres")
-            key = int(input("Ingrese el tamaño de la clave, puede estar entre 2,3 y 4 caracteres: "))
+            keySize = int(input("Ingrese el tamaño de la clave, puede estar entre 2,3 y 4 caracteres: "))
         else:
-            print("La clave es: " + str(key))
-            return convertMessage(message, key)
+            print("El tamaño de la clave es: " + str(keySize))
+            key = input("Ingrese la clave: ")
+            while (len(key) != keySize):
+                print("La clave debe tener " + str(keySize) + " caracteres")
+                key = input("Ingrese la clave: ")
+            else:
+                key = key.upper()
+                print("La clave es: " + key)
+            return convertMessage(message, keySize)
 
 
 def convertMessage(msg, k):
-    for index in range(len(msg)):
+    for index in range (len(msg)):
         if index % k == 0:
-            sub = msg[index:index + k]
-            mtrx = []
+            sub = msg[index:index +k]
+            matrix = []
             for j in sub:
-                mtrx.append(j)
-            print('  '.join(mtrx))
+                matrix.append(j)
+            print("["+'  '.join(matrix)+"]")
+
 
 def main():
     createCharacters()
