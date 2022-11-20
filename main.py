@@ -26,25 +26,22 @@ def getMessage():
     else:
         print("El mensaje a cifrar es: " + message.upper()),
         key = int(input("Ingrese el tamaño de la clave, puede estar entre 2,3 y 4 caracteres: "))
-        if (key < 2 or key > 4):
+        while (key < 2 or key > 4):
             print("La clave debe tener entre 2 y 4 caracteres")
             key = int(input("Ingrese el tamaño de la clave, puede estar entre 2,3 y 4 caracteres: "))
         else:
             print("La clave es: " + str(key))
             return convertMessage(message, key)
 
-    return
-
 
 def convertMessage(msg, k):
     for index in range(len(msg)):
         if index % k == 0:
             sub = msg[index:index + k]
-            my_list = []
+            mtrx = []
             for j in sub:
-                my_list.append(j)
-            print(' '.join(my_list))
-
+                mtrx.append(j)
+            print('  '.join(mtrx))
 
 def main():
     createCharacters()
