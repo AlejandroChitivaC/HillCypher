@@ -1,6 +1,12 @@
 import re
 
+import numpy
 from numpy import *
+
+# Generating the alphabet and digits
+alp = [chr(i) for i in range(65, 91)] + [str(i) for i in range(10)]
+# Adding the special characters to the list
+alp.append("_")
 
 
 def createCharacters():
@@ -48,12 +54,13 @@ def getMessage():
 
 def convertToMatrix(msg, k):
     for index in range(len(msg)):
-        if index % k == 0:
-            sub = msg[index:index + k]
-            matrix = []
-            for j in sub:
-                matrix.append(j)
-            print("[" + '  '.join(matrix) + "]")
+        msg = msg.replace(msg[index], str(alp.index(msg[index])))
+    matrix = numpy.zeros((k, k))
+    for i in range(k):
+        for j in range(k):
+            matrix[i][j] = msg[i * k + j]
+            numpy.array(matrix)
+        return print(numpy.transpose(matrix))
 
 
 def main():
