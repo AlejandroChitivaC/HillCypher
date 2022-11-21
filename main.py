@@ -19,6 +19,8 @@ def createCharacters():
 
 def getMessage():
     # Getting the message from the user
+    # opc=input("Seleccione una opcion \n 1. Cifrar \n 2. Descifrar \n")
+
     message = input("Ingrese el mensaje, tenga en cuenta que el espacio está representado por '_' : ")
     if (message == ""):
         print("No ingresó ningún mensaje")
@@ -40,8 +42,8 @@ def getMessage():
         else:
             print("El tamaño de la clave es: " + str(keySize))
             key = input("Ingrese la clave: ")
-            while (len(key) != keySize):
-                print("La clave debe tener " + str(keySize) + " caracteres")
+            while (len(key) != (keySize * keySize)):
+                print("La clave debe tener " + str(keySize * keySize) + " caracteres")
                 key = input("Ingrese la clave: ")
             else:
                 key = key.upper()
@@ -55,7 +57,7 @@ def getMessage():
 def convertToMatrix(msg, k):
     for index in range(len(msg)):
         msg = msg.replace(msg[index], str(alp.index(msg[index])))
-    matrix = numpy.zeros((k, k))
+        matrix = numpy.zeros((k, k))
     for i in range(k):
         for j in range(k):
             matrix[i][j] = msg[i * k + j]
