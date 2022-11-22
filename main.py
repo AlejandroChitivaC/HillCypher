@@ -1,6 +1,7 @@
 import re
 
 import numpy
+from sympy import Matrix
 from numpy import *
 
 # Generating the alphabet and digits
@@ -72,3 +73,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
