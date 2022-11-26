@@ -1,7 +1,6 @@
 import re
 
 import numpy
-from sympy import Matrix
 from numpy import *
 
 # Generating the alphabet and digits
@@ -19,9 +18,6 @@ def createCharacters():
 
 
 def getMessage():
-    # Getting the message from the user
-    # opc=input("Seleccione una opcion \n 1. Cifrar \n 2. Descifrar \n")
-
     message = input("Ingrese el mensaje, tenga en cuenta que el espacio está representado por '_' : ")
     if (message == ""):
         print("No ingresó ningún mensaje")
@@ -37,6 +33,8 @@ def getMessage():
     else:
         print("El mensaje a cifrar es: " + message.upper()),
         keySize = int(input("Ingrese el tamaño de la clave, puede estar entre 2,3 y 4 caracteres: "))
+        if (keySize == str or keySize > 4 or keySize < 2):
+            keySize = int(input("El tamaño de la clave debe ser un número entero entre 2 y 4: "))
         while (keySize < 2 or keySize > 4):
             print("La clave debe tener entre 2 y 4 caracteres")
             keySize = int(input("Ingrese el tamaño de la clave, puede estar entre 2,3 y 4 caracteres: "))
@@ -66,11 +64,25 @@ def convertToMatrix(msg, k):
         return print(numpy.transpose(matrix))
 
 
+def cypher():
+    print("Cifrar")
+
+
+def decipher():
+    print("Descifrar")
+
+
 def main():
-    createCharacters()
-    getMessage()
+    opc = input("Seleccione una opcion \n 1. Cifrar \n 2. Descifrar \n")
+    if (opc == "1"):
+        createCharacters()
+        getMessage()
+    elif (opc == "2"):
+        print("Descifrar")
+    elif (opc != "1" or opc != "2"):
+        print("ADVERTENCIA: Ingrese una opción válida, 1 para Cifrar y 2 para Descifrar")
+        main()
 
 
 if __name__ == "__main__":
     main()
-
