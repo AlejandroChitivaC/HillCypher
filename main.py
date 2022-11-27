@@ -1,7 +1,6 @@
 import re
 
 import numpy
-from sympy import Matrix
 from numpy import *
 
 # Generating the alphabet and digits
@@ -19,10 +18,7 @@ def createCharacters():
 
 
 def getMessage():
-    # Getting the message from the user
-    # opc=input("Seleccione una opcion \n 1. Cifrar \n 2. Descifrar \n")
-
-    message = input("Ingrese el mensaje, tenga en cuenta que el espacio está representado por '_' : ")
+    message = input("Ingrese el mensaje, tenga en cuenta que el espacio está representado por '_' : ").upper()
     if (message == ""):
         print("No ingresó ningún mensaje")
         getMessage()
@@ -37,6 +33,8 @@ def getMessage():
     else:
         print("El mensaje a cifrar es: " + message.upper()),
         keySize = int(input("Ingrese el tamaño de la clave, puede estar entre 2,3 y 4 caracteres: "))
+        if (keySize > 4 or keySize < 2 or keySize == str):
+            keySize = int(input("El tamaño de la clave debe ser un número entero entre 2 y 4: "))
         while (keySize < 2 or keySize > 4):
             print("La clave debe tener entre 2 y 4 caracteres")
             keySize = int(input("Ingrese el tamaño de la clave, puede estar entre 2,3 y 4 caracteres: "))
@@ -49,13 +47,25 @@ def getMessage():
             else:
                 key = key.upper()
                 print("La clave es: " + key)
+                keyToMatrix(key, keySize)
+                print('--------------------------------------- \n'
+                      'El mensaje cifrado es: ')
 
-                # matriz d*d es la matriz de la clave
-                print(convertToMatrix(key, keySize))
-            return convertToMatrix(message.upper(), keySize)
+            return convertToMatrix(message, keySize)
 
 
 def convertToMatrix(msg, k):
+    for index in range(len(msg)):
+        msg = msg.replace(msg[index], str(alp.index(msg[index])))
+        matrix = numpy.zeros((len(msg), k))
+    for i in range(k):
+        for j in range(k):
+            matrix[i][j] = msg[i * k + j]
+            numpy.array(matrix)
+        return print(numpy.transpose(matrix))
+
+
+def keyToMatrix(msg,k):
     for index in range(len(msg)):
         msg = msg.replace(msg[index], str(alp.index(msg[index])))
         matrix = numpy.zeros((k, k))
@@ -66,11 +76,25 @@ def convertToMatrix(msg, k):
         return print(numpy.transpose(matrix))
 
 
+def cypher():
+    print("Cifrar")
+
+
+def decipher():
+    print("Descifrar")
+
+
 def main():
-    createCharacters()
-    getMessage()
+    opc = input("Seleccione una opcion \n 1. Cifrar \n 2. Descifrar \n")
+    if (opc == "1"):
+        createCharacters()
+        getMessage()
+    elif (opc == "2"):
+        print("Descifrar")
+    elif (opc != "1" or opc != "2"):
+        print("ADVERTENCIA: Ingrese una opción válida, 1 para Cifrar y 2 para Descifrar")
+        main()
 
 
 if __name__ == "__main__":
     main()
-
