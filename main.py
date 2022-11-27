@@ -18,11 +18,7 @@ def createCharacters():
 
 
 def getMessage():
-<<<<<<< HEAD
     message = input("Ingrese el mensaje, tenga en cuenta que el espacio está representado por '_' : ").upper()
-=======
-    message = input("Ingrese el mensaje, tenga en cuenta que el espacio está representado por '_' : ")
->>>>>>> 79763b8d99b35e04ad8497d94be8cb2e8a3ef1c8
     if (message == ""):
         print("No ingresó ningún mensaje")
         getMessage()
@@ -37,11 +33,7 @@ def getMessage():
     else:
         print("El mensaje a cifrar es: " + message.upper()),
         keySize = int(input("Ingrese el tamaño de la clave, puede estar entre 2,3 y 4 caracteres: "))
-<<<<<<< HEAD
         if (keySize > 4 or keySize < 2 or keySize == str):
-=======
-        if (keySize == str or keySize > 4 or keySize < 2):
->>>>>>> 79763b8d99b35e04ad8497d94be8cb2e8a3ef1c8
             keySize = int(input("El tamaño de la clave debe ser un número entero entre 2 y 4: "))
         while (keySize < 2 or keySize > 4):
             print("La clave debe tener entre 2 y 4 caracteres")
