@@ -8,6 +8,22 @@ alp = [chr(i) for i in range(65, 91)] + [str(i) for i in range(10)]
 # Adding the special characters to the list
 alp.append("_")
 
+encrypt = {
+    'A': '0', 'B': '1', 'C': '2', 'D': '3', 'E': '4', 'F': '5', 'G': '6', 'H': '7', 'I': '8', 'J': '9', 'K': '10',
+    'L': '11', 'M': '12', 'N': '13', 'O': '14', 'P': '15', 'Q': '16', 'R': '17', 'S': '18', 'T': '19', 'U': '20',
+    'V': '21', 'W': '22', 'X': '23', 'Y': '24', 'Z': '25', '0': '26', '1': '27', '2': '28', '3': '29', '4': '30',
+    '5': '31', '6': '32', '7': '33', '8': '34', '9': '35', '_': '36'
+}
+decrypt = {
+    '0': 'A', '1': 'B', '2': 'C', '3': 'D', '4': 'E', '5': 'F', '6': 'G', '7': 'H', '8': 'I', '9': 'J', '10': 'K',
+    '11': 'L', '12': 'M', '13': 'N', '14': 'O', '15': 'P', '16': 'Q', '17': 'R', '18': 'S', '19': 'T', '20': 'U',
+    '21': 'V', '22': 'W', '23': 'X', '24': 'Y', '25': 'Z', '26': '0', '27': '1', '28': '2', '29': '3', '30': '4',
+    '31': '5', '32': '6', '33': '7', '34': '8', '35': '9', '36': '_'
+}
+
+message = []
+key = []
+
 
 def createCharacters():
     # Generating the alphabet and digits
@@ -49,7 +65,7 @@ def getMessage():
                 print("La clave es: " + key)
                 keyToMatrix(key, keySize)
                 print('--------------------------------------- \n'
-                      'El mensaje cifrado es: ')
+                      'Matriz del mensaje: ')
 
             return convertToMatrix(message, keySize)
 
@@ -57,15 +73,20 @@ def getMessage():
 def convertToMatrix(msg, k):
     for index in range(len(msg)):
         msg = msg.replace(msg[index], str(alp.index(msg[index])))
-        matrix = numpy.zeros((len(msg), k))
+        matrix = numpy.zeros((k, len(msg) // k))
     for i in range(k):
-        for j in range(k):
+        for j in range(len(msg) // k):
             matrix[i][j] = msg[i * k + j]
-            numpy.array(matrix)
-        return print(numpy.transpose(matrix))
+
+        return print(numpy.array(matrix))
+# metodo para llenar la matriz con los valores del mensaje que esten en encrypt
+def fillMatrix(msg, k):
+    
 
 
-def keyToMatrix(msg,k):
+
+
+def keyToMatrix(msg, k):
     for index in range(len(msg)):
         msg = msg.replace(msg[index], str(alp.index(msg[index])))
         matrix = numpy.zeros((k, k))
@@ -77,7 +98,8 @@ def keyToMatrix(msg,k):
 
 
 def cypher():
-    print("Cifrar")
+    createCharacters()
+    getMessage()
 
 
 def decipher():
@@ -87,8 +109,8 @@ def decipher():
 def main():
     opc = input("Seleccione una opcion \n 1. Cifrar \n 2. Descifrar \n")
     if (opc == "1"):
-        createCharacters()
-        getMessage()
+        print("Cifrar por medio de Hill Cipher")
+        cypher()
     elif (opc == "2"):
         print("Descifrar")
     elif (opc != "1" or opc != "2"):
