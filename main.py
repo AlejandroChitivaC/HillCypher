@@ -61,9 +61,12 @@ def getMessage():
                 # determinant(keyMatrix)
                 t = sympy.Matrix(keyMatrix).det()
                 print("Determinante de la matriz de la clave: " + str(t))
-                if (t == 0):
-                    print("La clave no es válida")
-                    key = input("Ingrese la clave: ")
+                while (t == 0):
+                    print("La clave no es válida, ya que su determinante es 0, por lo tanto no es invertible""\n"
+                          "Intente nuevamente...")
+
+
+                    getMessage()
 
                 print('--------------------------------------- \n'
                       'Matriz del mensaje: ')
@@ -98,6 +101,14 @@ def letterToNumber(message):
     new_message = []
     for i in message:
         new_message.append(encrypt[i])
+        print(new_message)
+    return new_message
+
+
+def numberToLetter(message):
+    new_message = []
+    for i in message:
+        new_message.append(decrypt[i])
         print(new_message)
     return new_message
 
