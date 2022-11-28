@@ -57,6 +57,7 @@ def getMessage():
                 print('--------------------------------------- \n'
                       'Matriz de la clave: ')
                 keyMatrix = createKeyMatrix(key, keySize)
+                determinant(keyMatrix)
 
                 print('--------------------------------------- \n'
                       'Matriz del mensaje: ')
@@ -107,7 +108,9 @@ def createGroups(message, keySize):
     return groups
 
 
-
+# se llama en la linea 60
+def determinant(keyMatrix):
+    return print("El determinante de la matriz es: " + str(numpy.linalg.det(keyMatrix)))
 
 
 def main():
