@@ -64,9 +64,8 @@ def getMessage():
                 while (t == 0):
                     print("La clave no es válida, ya que su determinante es 0, por lo tanto no es invertible""\n"
                           "Intente nuevamente...")
-
-
                     getMessage()
+                    break
 
                 print('--------------------------------------- \n'
                       'Matriz del mensaje: ')
