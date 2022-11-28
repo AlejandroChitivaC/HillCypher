@@ -4,6 +4,7 @@ import numpy
 import numpy as np
 from egcd import egcd
 from numpy.linalg import det
+from sympy.matrices import Matrix
 import sympy
 import re
 
@@ -57,7 +58,12 @@ def getMessage():
                 print('--------------------------------------- \n'
                       'Matriz de la clave: ')
                 keyMatrix = createKeyMatrix(key, keySize)
-                determinant(keyMatrix)
+                # determinant(keyMatrix)
+                t = sympy.Matrix(keyMatrix).det()
+                print("Determinante de la matriz de la clave: " + str(t))
+                if (t == 0):
+                    print("La clave no es válida")
+                    key = input("Ingrese la clave: ")
 
                 print('--------------------------------------- \n'
                       'Matriz del mensaje: ')
@@ -109,8 +115,8 @@ def createGroups(message, keySize):
 
 
 # se llama en la linea 60
-def determinant(keyMatrix):
-    return print("El determinante de la matriz es: " + str(numpy.linalg.det(keyMatrix)))
+# def determinant(keyMatrix):
+#     return print("El determinante de la matriz es: " + str(numpy.linalg.det(keyMatrix)))
 
 
 def main():
