@@ -1,13 +1,11 @@
-import re
+import math
 
 import numpy
-from numpy import *
+from numpy.linalg import det
+import sympy
+import re
 
-# Generating the alphabet and digits
-alp = [chr(i) for i in range(65, 91)] + [str(i) for i in range(10)]
-# Adding the special characters to the list
-alp.append("_")
-
+# Diccionarios de Encriptacion y Desencriptacion
 encrypt = {
     'A': '0', 'B': '1', 'C': '2', 'D': '3', 'E': '4', 'F': '5', 'G': '6', 'H': '7', 'I': '8', 'J': '9', 'K': '10',
     'L': '11', 'M': '12', 'N': '13', 'O': '14', 'P': '15', 'Q': '16', 'R': '17', 'S': '18', 'T': '19', 'U': '20',
@@ -21,18 +19,8 @@ decrypt = {
     '31': '5', '32': '6', '33': '7', '34': '8', '35': '9', '36': '_'
 }
 
-message = []
-key = []
 
-
-def createCharacters():
-    # Generating the alphabet and digits
-    alp = [chr(i) for i in range(65, 91)] + [str(i) for i in range(10)]
-    # Adding the special characters to the list
-    alp.append("_")
-    return print(alp);
-
-
+# Metodo para obtener el mensaje a cifrar
 def getMessage():
     message = input("Ingrese el mensaje, tenga en cuenta que el espacio está representado por '_' : ").upper()
     if (message == ""):
@@ -42,7 +30,6 @@ def getMessage():
         print("El mensaje no puede tener más de 16 caracteres")
         message = getMessage()
     specialChar = re.compile(r'[^a-zA-Z0-9_]')
-    # Comprobar que el mensaje no contenga caracteres especiales por medio de un Regex
     if specialChar.search(message) or message == "":
         print("Mensaje inválido intente nuevamente")
         return getMessage()
@@ -63,54 +50,65 @@ def getMessage():
             else:
                 key = key.upper()
                 print("La clave es: " + key)
-                keyToMatrix(key, keySize)
+                letterToNumber(message)
+                letterToNumber(key)
+                print('--------------------------------------- \n'
+                      'Matriz de la clave: ')
+                keyMatrix = createKeyMatrix(key, keySize)
                 print('--------------------------------------- \n'
                       'Matriz del mensaje: ')
-
-            return convertToMatrix(message, keySize)
-
-
-def convertToMatrix(msg, k):
-    for index in range(len(msg)):
-        msg = msg.replace(msg[index], str(alp.index(msg[index])))
-        matrix = numpy.zeros((k, len(msg) // k))
-    for i in range(k):
-        for j in range(len(msg) // k):
-            matrix[i][j] = msg[i * k + j]
-
-        return print(numpy.array(matrix))
-# metodo para llenar la matriz con los valores del mensaje que esten en encrypt
-def fillMatrix(msg, k):
-    
+                messageMatrix = createMessageMatrix(message, keySize)
+                print(encryptMessage(message, key))
+            return
 
 
+def createKeyMatrix(key, keySize):
+    keyMatrix = []
+    key = letterToNumber(key)
+    for i in range(keySize):
+        keyMatrix.append(key[keySize * i:keySize * (i + 1)])
+    print("Matriz de la clave: ")
+    print(numpy.transpose(keyMatrix))
+    return keyMatrix
 
 
-def keyToMatrix(msg, k):
-    for index in range(len(msg)):
-        msg = msg.replace(msg[index], str(alp.index(msg[index])))
-        matrix = numpy.zeros((k, k))
-    for i in range(k):
-        for j in range(k):
-            matrix[i][j] = msg[i * k + j]
-            numpy.array(matrix)
-        return print(numpy.transpose(matrix))
+def createMessageMatrix(message, keySize):
+    messageMatrix = []
+    message = letterToNumber(message)
+    for i in range(keySize):
+        messageMatrix.append(message[keySize * i:keySize * (i + 1)])
+    while len(messageMatrix[-1]) != keySize:
+        messageMatrix[-1].append('26')
+    print("Matriz del mensaje: ")
+    print(numpy.transpose(messageMatrix))
+    return messageMatrix
 
 
-def cypher():
-    createCharacters()
-    getMessage()
+def letterToNumber(message):
+    message = message.upper()
+    new_message = []
+    for i in message:
+        new_message.append(encrypt[i])
+        print(new_message)
+    return new_message
 
 
-def decipher():
-    print("Descifrar")
+# Funcion para dividir el mensaje en grupos de tamaño de la clave
+def createGroups(message, keySize):
+    groups = []
+    for i in range(0, len(message), keySize):
+        groups.append(message[i:i + keySize])
+    return groups
+
+# Metodo para cifrar el mensaje con la clave
 
 
 def main():
     opc = input("Seleccione una opcion \n 1. Cifrar \n 2. Descifrar \n")
     if (opc == "1"):
         print("Cifrar por medio de Hill Cipher")
-        cypher()
+        getMessage()
+
     elif (opc == "2"):
         print("Descifrar")
     elif (opc != "1" or opc != "2"):
