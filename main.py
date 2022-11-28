@@ -1,6 +1,8 @@
 import math
 
 import numpy
+import numpy as np
+from egcd import egcd
 from numpy.linalg import det
 import sympy
 import re
@@ -55,10 +57,11 @@ def getMessage():
                 print('--------------------------------------- \n'
                       'Matriz de la clave: ')
                 keyMatrix = createKeyMatrix(key, keySize)
+
                 print('--------------------------------------- \n'
                       'Matriz del mensaje: ')
                 messageMatrix = createMessageMatrix(message, keySize)
-                print(encryptMessage(message, key))
+                createGroups(message, keySize)
             return
 
 
@@ -85,7 +88,6 @@ def createMessageMatrix(message, keySize):
 
 
 def letterToNumber(message):
-    message = message.upper()
     new_message = []
     for i in message:
         new_message.append(encrypt[i])
@@ -93,14 +95,19 @@ def letterToNumber(message):
     return new_message
 
 
-# Funcion para dividir el mensaje en grupos de tamaño de la clave
 def createGroups(message, keySize):
     groups = []
+    letterToNumber(message)
     for i in range(0, len(message), keySize):
-        groups.append(message[i:i + keySize])
+        groups.append(letterToNumber(message)[i:i + keySize])
+        numpy.array(groups)
+    print('--------------------------------------- \n'
+          'Grupos de letras: ')
+    print(numpy.transpose(groups))
     return groups
 
-# Metodo para cifrar el mensaje con la clave
+
+
 
 
 def main():
